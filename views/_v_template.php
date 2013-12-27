@@ -17,7 +17,15 @@
     <div id="layer-3" class='content'>
 
     <?php if(isset($user->username)): ?>
-        <div id="left-sidebar">My Games</div>
+        <div id="left-sidebar">
+            <h2>My Games</h2>
+            <?php if(isset($games)): ?>
+                <?php foreach($games as $game): ?>
+                    <a href="/game/play/<?=$game['game_id']?>"><?=$game['opponent']?></a><br>
+                    Last word: <?=$game['last_move']?> at <?=$game['last_move_date']?><br>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
         <div id="middle-column">
             <ul id="navigation">
                 <li><a href="/">home</a></li>
@@ -35,7 +43,14 @@
 
             <?php if(isset($content)) echo $content; ?>
         </div>
-        <div id="right-sidebar">Users</div>
+        <div id="right-sidebar">
+            <h2>Users</h2>
+            <?php if(isset($user_list)): ?>
+                <?php foreach($user_list as $user_x): ?>
+                    <a href="/user/profile/<?=$user_x?>"><?=$user_x?></a><br>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
 
     <?php else: ?>
 

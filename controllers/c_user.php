@@ -51,8 +51,7 @@ class user_controller extends base_controller {
 	    	array_push($errors, 'Password entries did not match.');
 		}
 
-		// Limit usernames to 16 characters because otherwise the user list
-		//   table gets ugly. Yes, this was my workaround
+		// Limit usernames to 16 characters
 		$check_len = strlen($_POST['username']);
 		if(($check_len > 16) || ($check_len < 2)) {
 			$error_flag = true;
@@ -138,8 +137,24 @@ class user_controller extends base_controller {
 				$current_username = $this->user->username;
 			}
 
+			$q = 'SELECT *
+					FROM users
+				   WHERE username = "'.$current_username.'"';
+
+			$profile_user = DB::instance(DB_NAME)->select_row($q);
+
 			$this->template->content = View::instance('v_user_profile');
-			$this->template->content->current_username = $current_username;
+
+			if($profile_user) {
+				$current_username = $profile_user['username'];
+				$this->template->content->current_username = $current_username;
+				$this->template->content->profile_user = $profile_user;
+			}
+
+			// NEED TO:
+			//   GET USER'S GAMES, DISPLAY IN LEFT-SIDEBAR WITH LINKS
+			//   GET LIST OF ALL USERS, DISPLAY IN RIGHT-SIDEBAR
+
 			echo $this->template;
 		}
 	}
