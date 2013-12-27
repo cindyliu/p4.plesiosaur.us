@@ -1,0 +1,73 @@
+FUNCTIONS
+
+GET_RANDOM_WORD
+
+CHECK_FOR_UNIQUE_LETTERS
+	explode_word
+
+CHECK_VALID_WORD
+
+
+
+
+USEFUL
+
+location.reload();
+
+$.ajax(
+	type:'POST',
+	url:'process.php/?cache_bust=' + [timefunc],
+	success:function(response) {
+		do_something(response);
+	}
+	data: {
+		key:val,
+		key:val,
+		....
+	}
+);
+
+^this will put the data key:val pairs into the $_POST variable.
+
+var options = {
+	type: 'POST',
+	url: '/posts/p_add/',
+	beforeSubmit: function() {
+		$('#results').html('Adding....');
+	},
+	success: function(response) {
+		$('#results').html(response);
+	}
+};
+$('form').ajaxForm(options);
+
+
+Utils::load_client_files
+Utils::curl('url') - returns results (as html page?)
+Utils::xml_to_array(xml);
+
+Debug::dump(var,namestring);
+
+getJSON - ajax call formatted as json
+
+PHP
+foreach(element as breakdown)
+
+
+
+DATABASES
+users
+user_id, username, password, token, date_created, last_login, avatar
+games
+game_id, user1, user2, date_started, last_played
+guesses
+game_id, guess_no, user_id, word, num_correct, date_guessed
+
+
+
+
+
+LOOK INTO
+
+twitter bootstrap
+pandoc?

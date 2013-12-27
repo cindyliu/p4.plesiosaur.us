@@ -1,0 +1,275 @@
+/*
+ *  ONE STYLE SHEET FOR ALL PAGES BECAUSE I
+ *  DON'T KNOW WHAT EFFICIENT CSS LOOKS LIKE
+ */
+
+
+/*
+ *  MAJOR PAGE ELEMENTS
+ */
+
+body {
+    position: relative;
+    background-color: #2a2a2a;
+    font: 125%/150% "Courier" monospace;
+    color: #eec;
+    margin: auto;
+}
+
+.content {
+    display: block;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    clear: left;
+}
+
+#left-sidebar, #middle-column, #right-sidebar {
+    display: block;
+    position: relative;
+    float: left;
+    width: 25%;
+    padding: .5em;
+    text-align: center;
+}
+
+#middle-column {
+    width: 40%;
+    padding: 0 1.5em;
+    border-left: 1px dashed white;
+    border-right: 1px dashed white;
+}
+
+
+/*
+a:link, a:visited {
+    text-decoration: none;
+    color: #8e9;
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+}
+
+.button, nav a {
+    display: block;
+    background-color: #283;
+    text-align: center;
+    font-weight: bold;
+    padding: .5em 1em .5em 1em;
+    margin: auto;
+    border: solid 2px #555;
+    border-radius: 1em;
+}
+
+nav a:link, nav a:visited {
+    color: #cfc;
+    margin: 0 .5em 0 .5em;
+}
+
+nav a:hover, nav a:active {
+    background-color: #cfc;
+    color: #283;
+    text-decoration: none;
+}
+
+a#profile:link, a#profile:visited {
+    background-color: #ed8;
+    color: black;
+}
+
+a#profile:hover, a#profile:active {
+    background-color: black;
+    color: white;
+}
+
+a.button:link, a.button:visited {
+    background-color: #004;
+    color: #ccc;
+    font-size: 75%;
+    margin: auto;
+}
+
+a.button:hover, a.button:active {
+    background-color: #ccc;
+    color: #008;
+    text-decoration: none;
+}
+*/
+
+/* h1 tag is pretty much only used in header */
+h1 {
+    display: block;
+    background-color: #dea;
+    color: #253;
+    text-align: center;
+    min-width: 5em;
+    width: 10%;
+    padding: .5em;
+    margin: 1.5em auto .5em auto;
+    border: solid 8px #253;
+    border-radius: 1.5em;
+    clear: none;
+}
+
+/* again changes based on user login status */
+h1.in {
+    position: relative;
+    float: right;
+    background-color: #ccf;
+    color: #008;
+    width: 25%;
+    padding: .75em 0 .75em 0;
+    margin: 0;
+    clear: none;
+}
+
+h2 {
+    padding: 1em;
+}
+
+/*
+ *  TABLE ELEMENT FORMATTING
+ *    Note: I could not prevent table elements
+ *    from extending past their container element
+ *    and I forgot to ask on Piazza. :( sorry
+ */
+table {
+    position: relative;
+    margin: auto;
+    table-layout: fixed;
+}
+
+td {
+    text-align: left;
+}
+
+td.prompt {
+    text-align: right;
+
+}
+
+
+.error {
+    color: red;
+    font: 75%/100% "Tahoma" sans-serif;
+}
+
+/*
+.warning {
+    color: #a00;
+    font: italic 75% 'Verdana', sans-serif;
+    margin: 1em auto 1em auto;
+    width: 75%;
+}
+
+em {
+    font-weight: bold;
+    font-style: normal;
+}
+*/
+
+/*-------------------------------------------------------------------------------------------------
+Buttons
+-------------------------------------------------------------------------------------------------*/
+input[type=button], input[type=submit] {
+  background-color: #253;
+  border: 1px solid #364;
+  border-bottom: 1px solid #142;
+  border-radius: 3px;
+  color: #dda;
+  font: 75%/100% "Courier" monospace;
+  padding: 6px 0 6px 0;
+  position:relative;
+  top:-1px;
+  text-align: center;
+  text-shadow: 0 -1px 0 #4c9021;
+  width: 7.5em;
+  margin: 1em;
+}
+
+input[type=button]:hover, input[type=submit]:hover {
+    background-color: #dda;
+    color: #253;
+    cursor: pointer; 
+}
+
+input[type=button]:active, input[type=submit]:active {
+    border: 1px solid #5b992b;
+    border-bottom: 1px solid #538c27;
+}
+
+
+/************ NEW STUFF BELOW ***************/
+
+a:link {
+    color: #b9ffb9;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #ff9;
+    text-decoration: none;
+}
+
+a:link:hover, a:active {
+    color: #9f9;
+    text-decoration: underline;
+}
+
+a:visited:hover {
+    color: #ccc;
+    text-decoration: none;
+}
+
+#login {
+    color: #aec;
+}
+
+input[type=text], input[type=password] {
+    background-color: #aca;
+    color: #253;
+    font-weight: bold;
+    border-radius: .5em;
+    margin: .5em;
+}
+
+#navigation {
+    font-size: 90%;
+    list-style-type: none;    
+}
+
+#navigation li {
+    position: relative;
+    float: left;
+    margin: 0 1em;
+    padding: 0 1em;
+}
+
+#navigation li a {
+    color: white;
+    text-decoration: none;
+}
+
+#navigation li a:hover {
+    color: #dfd;
+    border-top: 1px dashed #aaa;
+    border-bottom: 1px dashed #aaa;
+}
+
+.user-message {
+    display: block;
+    position: relative;
+    background-color: #666;
+    color: #0f0;
+    font: 75%/100% "Courier" monospace;
+    text-align: center;
+    margin: auto auto 2em auto;
+    padding: 1em;
+    border: solid 0px #999;
+    border-radius: 2em;
+    min-width: 15em;
+    max-width: 30em;
+    width: 15%;
+    clear: left;
+}
