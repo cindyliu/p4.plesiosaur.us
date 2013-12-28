@@ -257,6 +257,10 @@ input[type=text], input[type=password] {
     border-bottom: 1px dashed #aaa;
 }
 
+ul {
+    text-align: left;
+}
+
 .user-message {
     display: block;
     position: relative;

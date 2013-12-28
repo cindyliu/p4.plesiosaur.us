@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 27, 2013 at 09:20 AM
+-- Generation Time: Dec 29, 2013 at 12:41 AM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -22,12 +22,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `games` (
   `game_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user1_id` int(11) NOT NULL,
-  `user2_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `date_started` int(11) NOT NULL,
   `last_played` int(11) NOT NULL,
+  `status` varchar(10) NOT NULL DEFAULT 'live' COMMENT 'is game current or finished?',
   PRIMARY KEY (`game_id`),
-  KEY `user1_id` (`user1_id`,`user2_id`)
+  KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -39,12 +39,10 @@ CREATE TABLE `games` (
 CREATE TABLE `guesses` (
   `game_id` int(11) NOT NULL,
   `guess_no` int(11) NOT NULL AUTO_INCREMENT,
-  `date` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `guess_date` int(11) NOT NULL,
   `word` varchar(5) NOT NULL,
-  `num_correct` int(11) NOT NULL,
-  PRIMARY KEY (`guess_no`,`game_id`),
-  KEY `user_id` (`user_id`)
+  `num_correct` int(11) DEFAULT NULL,
+  PRIMARY KEY (`guess_no`,`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
