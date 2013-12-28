@@ -174,4 +174,5 @@ class user_controller extends base_controller {
 		Router::redirect('/index/index/logged_out');
 	}
 
+
 } #eoc

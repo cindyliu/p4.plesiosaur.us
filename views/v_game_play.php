@@ -1,5 +1,6 @@
-<?php if(isset($game)): ?>
-	<h2>Game with <?=$game['opponent']?></h2>
+<?php if(isset($game_data)): ?>
+	<h2>Game #<?=$game_data['game_id']?></h2>
+	
 <?php else: ?>
-	<h2>Error: game does not exist</h2>
+	<h2>Error: not an active game</h2>
 <?php endif; ?>

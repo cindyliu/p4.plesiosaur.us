@@ -12,17 +12,15 @@
 </head>
 
 <body>	
-    <div id="layer-1">
-    <div id="layer-2">
-    <div id="layer-3" class='content'>
+    <div class='content'>
 
     <?php if(isset($user->username)): ?>
         <div id="left-sidebar">
             <h2>My Games</h2>
             <?php if(isset($games)): ?>
                 <?php foreach($games as $game): ?>
-                    <a href="/game/play/<?=$game['game_id']?>"><?=$game['opponent']?></a><br>
-                    Last word: <?=$game['last_move']?> at <?=$game['last_move_date']?><br>
+                    <a href="/game/play/<?=$game['game_id']?>">Game #<?=$game['game_id']?></a><br>
+                    Last move: <?=$game['last_move']?> at <?=$game['last_move_date']?><br>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
@@ -73,8 +71,9 @@
 
     <?php if(isset($client_files_body)) echo $client_files_body; ?>
 
+    <div id='overlay'></div>
+
     </div>
-    </div>
-    </div>
+
 </body>
 </html>
