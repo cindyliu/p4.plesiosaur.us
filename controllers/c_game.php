@@ -8,12 +8,26 @@ class game_controller extends base_controller {
 
 	public function newgame() {
 
+		$secret_word = 'BAGEL';
 
+		$new_game = Array(
+			'game_id' => '',
+			'user_id' => $this->user->user_id,
+			'date_started' => Time::now(),
+			'secret_word' => $secret_word,
+			'last_played' => Time::now(),
+			'status' => 'live',
+			'num_guesses' => 0
+		);
 
-		// NEED TO FIGURE OUT HOW TO ADD GAME INTO DB
+		$newgame_id = DB::instance(DB_NAME)->insert_row('games', $new_game);
 
-		$this->template->content = View::instance('v_game_new');
-		echo $this->template;
+		if($newgame_id) {
+			Router::redirect('/game/play/'.$newgame_id);
+		}
+		else {
+			Router::redirect('/index/index/newgame-error');
+		}
 	}
 
 	public function play($game_id = NULL) {
@@ -29,7 +43,7 @@ class game_controller extends base_controller {
 
 		if($game) {
 
-			$this->template->game_data = $game;
+			$this->template->content->game_data = $game;
 
 			$q = 'SELECT *
 					FROM guesses
@@ -38,8 +52,16 @@ class game_controller extends base_controller {
 			$guesses = DB::instance(DB_NAME)->select_rows($q);
 
 			$this->template->guesses = $guesses;
-			
+
 		}
+
+		# CSS/JS includes
+			$client_files_head = Array("//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+	    	$this->template->client_files_head = Utils::load_client_files($client_files_head);
+
+
+	    	$client_files_body = Array("js/jotto.js");
+	    	$this->template->client_files_body = Utils::load_client_files($client_files_body);
 
 		echo $this->template;
 	}

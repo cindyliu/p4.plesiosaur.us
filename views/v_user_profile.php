@@ -35,8 +35,20 @@
 	<ul>
 		<li>Current games: <?=$stats['curr_games']?></li>
 		<li>Lifetime games: <?=$stats['all_games']?></li>
-		<li>Best score: <?=$stats['best_score']?> turns for '<?=$stats['best_word']?>'</li>
-		<li>Worst score: <?=$stats['worst_score']?> turns for '<?=$stats['worst_word']?>'</li>
+		<li>Best score:
+			<?php if($stats['curr_games'] < $stats['all_games']): ?>
+				<?=$stats['best_score']?> turns for '<?=$stats['best_word']?>'
+			<?php else: ?>
+				<small>(no completed games yet)</small>
+			<?php endif; ?>
+			</li>
+		<li>Worst score:
+			<?php if($stats['curr_games'] < $stats['all_games']): ?>
+				<?=$stats['worst_score']?> turns for '<?=$stats['worst_word']?>'
+			<?php else: ?>
+				<small>(no completed games yet)</small>
+			<?php endif; ?>
+			</li>
 		<li>Player since: <?=$stats['joined']?></li>
 	</ul>
 	<br>

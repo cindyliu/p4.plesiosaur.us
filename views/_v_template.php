@@ -20,7 +20,14 @@
             <?php if(isset($games)): ?>
                 <?php foreach($games as $game): ?>
                     <a href="/game/play/<?=$game['game_id']?>">Game #<?=$game['game_id']?></a><br>
-                    Last move: <?=$game['last_move']?> at <?=$game['last_move_date']?><br>
+                    <?php if($game['last_move'] == NULL): ?>
+                        Started <?=$game['last_move_date']?><br>
+                        No moves yet.
+                    <?php else: ?>
+                        Last guess: <?=$game['last_move']?><br>
+                        at <?=$game['last_move_date']?>
+                    <?php endif; ?>
+                    <br><br>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>

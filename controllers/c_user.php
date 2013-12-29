@@ -151,9 +151,52 @@ class user_controller extends base_controller {
 				$this->template->content->profile_user = $profile_user;
 			}
 
-			// NEED TO:
-			//   GET USER'S GAMES, DISPLAY IN LEFT-SIDEBAR WITH LINKS
-			//   GET LIST OF ALL USERS, DISPLAY IN RIGHT-SIDEBAR
+			$curr_games = 'SELECT game_id
+							 FROM games
+							WHERE user_id = '.$profile_user['user_id'].'
+							  AND status = "live"';
+			
+			$old_games = 'SELECT secret_word, num_guesses
+							FROM games
+						   WHERE user_id = '.$profile_user['user_id'].'
+							 AND status = "closed"
+						ORDER BY last_played ASC';
+
+			$join_date = 'SELECT joined
+							FROM users
+						   WHERE user_id = '.$profile_user['user_id'];
+
+			$curr_games = count(DB::instance(DB_NAME)->select_rows($curr_games));
+			$old_games = DB::instance(DB_NAME)->select_rows($old_games);
+			$join_date = DB::instance(DB_NAME)->select_field($join_date);
+
+			$all_games = $curr_games + count($old_games);
+
+			$best_score = 1000;
+			$best_word = '00000';
+			$worst_score = 0;
+			$worst_word = '00000';
+
+			foreach($old_games as $old_game) {
+				if($old_game['num_guesses'] <= $best_score) {
+					$best_score = $old_game['num_guesses'];
+					$best_word = $old_game['secret_word'];
+				}
+				if($old_game['num_guesses'] >= $worst_score) {
+					$worst_score = $old_game['num_guesses'];
+					$worst_word = $old_game['secret_word'];
+				}
+			}
+
+			$this->template->content->stats = Array(
+				'curr_games' => $curr_games,
+				'all_games' => $all_games,
+				'best_score' => $best_score,
+				'best_word' => $best_word,
+				'worst_score' => $worst_score,
+				'worst_word' => $worst_word,
+				'joined' => Time::display($join_date, 'F j, Y')
+			);
 
 			echo $this->template;
 		}

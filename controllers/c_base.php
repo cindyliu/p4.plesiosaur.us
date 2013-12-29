@@ -75,11 +75,20 @@ class base_controller {
 
 				$last_guess = DB::instance(DB_NAME)->select_row($q);
 
-				$game = Array(
-					'game_id' => $result['game_id'],
-					'last_move' => $last_guess['word'],
-					'last_move_date' => Time::display($last_guess['guess_date'])
-				);
+				if($last_guess) {
+					$game = Array(
+						'game_id' => $result['game_id'],
+						'last_move' => strtoupper($last_guess['word']),
+						'last_move_date' => Time::display($last_guess['guess_date'], 'm-j-y g:ia')
+					);
+				}
+				else {
+					$game = Array(
+						'game_id' => $result['game_id'],
+						'last_move' => NULL,
+						'last_move_date' => Time::display($result['date_started'], 'm-j-y g:ia')
+					);
+				}
 				array_push($games, $game);
 			}
 			return $games;

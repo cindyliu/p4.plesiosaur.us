@@ -69,6 +69,11 @@ class index_controller extends base_controller {
 						$this->template->message = 'Login failed. Please try again.';
 					}
 					break;
+				case 'newgame-error':
+					if($this->user) {
+						$this->template->message = 'There was an error creating your game. Please try again.';
+					}
+					break;
 				default:
 			}
 			
@@ -90,5 +95,5 @@ class index_controller extends base_controller {
 			echo $this->template;
 
 	} # End of method
-		
+
 } # End of class
