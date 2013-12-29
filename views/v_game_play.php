@@ -27,7 +27,7 @@
 			Based on the computer's answers, use your logic skills to discover the secret word!
 		</p>
 		<p>
-			For example: if the secret word is PEARS and your guess is MANGO, the computer's response will be 1, since PEARS and MANGO have exactly 1 letter in common.
+			For example: if the secret word is MANGO and your guess is PEACH, the computer's response will be 1, since MANGO and PEACH have exactly 1 letter in common.
 		</p>
 		<p>
 			If you're stuck, a simple strategy is to alter your guesses one letter at a time and see how the numbers change.

@@ -183,7 +183,7 @@ ul {
     clear: left;
 }
 
-.guess {
+.guess > span {
     font-size: xx-large;
     letter-spacing: .15em;
     line-height: 1.25em;
@@ -231,13 +231,13 @@ ul {
     margin: 1em;
 }
 
-.alphabet {
+#alphabet > div {
     float: left;
     font-size: xx-large;
     padding: 0 .5em .75em .75em;
 }
 
-.alphabet, .guess {
+#alphabet, .guess {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;

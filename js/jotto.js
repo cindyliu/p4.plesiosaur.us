@@ -13,11 +13,17 @@ $.get('/wordlist.txt', function(data) {
 console.log(wordlist);
 	$('#left-sidebar').html('<h2>Guesses</h2>');
 	$('#right-sidebar').html('<h2>Alphabet</h2>');
+	var right_sidebar_to_append = '<div id="alphabet">';
 	for(var i = 0; i < ALPHABET.length; i++) {
-		$('#right-sidebar').append('<div class="alphabet ' + ALPHABET[i] + '">' + ALPHABET[i] + '</div>');
+		right_sidebar_to_append = right_sidebar_to_append + '<div class="' + ALPHABET[i] + '">' + ALPHABET[i] + '</div>';
 	};
-	$('#right-sidebar').append('<div id="reset-alphas">Reset Colors</div>');
-	$('#right-sidebar').append('<div id="alpha-instruct">Click letters to mark them in black (not in secret word), then green (in secret word), then back to default.</div>');
+
+	right_sidebar_to_append = right_sidebar_to_append + '</div><div id="reset-alphas">Reset Colors</div>';
+	right_sidebar_to_append = right_sidebar_to_append + '<div id="alpha-instruct">Click letters to mark them in black (not in secret word), then green (in secret word), then back to default.</div>';
+
+console.log(right_sidebar_to_append);
+
+	$('#right-sidebar').append(right_sidebar_to_append);
 
 	$.ajax({
 		type: 'POST',
@@ -32,7 +38,7 @@ console.log(wordlist);
 					left_sidebar_to_append = left_sidebar_to_append + '<span class="' + guess_split[j] + '">' + guess_split[j] + '</span>';
 				}
 				left_sidebar_to_append = left_sidebar_to_append + ': ' + guesses[i]['num_correct'] + '</div>';
-
+console.log(left_sidebar_to_append);
 				$('#left-sidebar').append(left_sidebar_to_append);
 			};
 		},
@@ -53,7 +59,6 @@ console.log(wordlist);
 		$(this).css('border-left','solid .25em #9c6');
 		$(this).css('border-bottom','solid .25em #360');
 		$(this).css('border-right','solid .25em #360');
-		$('#guess-error').html('');
 	});
 
 	$(document).on('click', ALPHA_SELECTOR, function() {
@@ -138,6 +143,7 @@ function do_guess(sw) {
 	var guess = $('#guess-box').val().toUpperCase();
 	var guess_array = guess.split('');
 	$('#guess-box').val('');
+	$('#guess-error').html('');
 
 console.log(guess);
 console.log(guess_array);
@@ -173,6 +179,10 @@ console.log(sw_array);
 				left_sidebar_to_append = left_sidebar_to_append + ': ' + num_correct + '</div>';
 
 				$('#left-sidebar').append(left_sidebar_to_append);
+
+				for(var j = 0; j < guess_array.length; j++) {
+					$('.guess.' + guess_array[j]).css('color','blue');
+				};
 
 				if(guess == sw) {
 					$('#content').html('CONGRATULATIONS, YOU FOUND THE SECRET WORD: ' + sw + '!');
