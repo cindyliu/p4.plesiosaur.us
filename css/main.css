@@ -92,49 +92,6 @@ td.prompt {
     font: 75%/100% "Tahoma" sans-serif;
 }
 
-/*
-.warning {
-    color: #a00;
-    font: italic 75% 'Verdana', sans-serif;
-    margin: 1em auto 1em auto;
-    width: 75%;
-}
-
-em {
-    font-weight: bold;
-    font-style: normal;
-}
-*/
-
-/*-------------------------------------------------------------------------------------------------
-Buttons
--------------------------------------------------------------------------------------------------*/
-input[type=button], input[type=submit] {
-  background-color: #253;
-  border: 1px solid #364;
-  border-bottom: 1px solid #142;
-  border-radius: 3px;
-  color: #dda;
-  font: 75%/100% "Courier" monospace;
-  padding: 6px 0 6px 0;
-  position:relative;
-  top:-1px;
-  text-align: center;
-  text-shadow: 0 -1px 0 #4c9021;
-  width: 7.5em;
-  margin: 1em;
-}
-
-input[type=button]:hover, input[type=submit]:hover {
-    background-color: #dda;
-    color: #253;
-    cursor: pointer; 
-}
-
-input[type=button]:active, input[type=submit]:active {
-    border: 1px solid #5b992b;
-    border-bottom: 1px solid #538c27;
-}
 
 
 /************ NEW STUFF BELOW ***************/
@@ -235,6 +192,12 @@ ul {
     background-color: black;
 }
 
+.guess {
+    font-size: xx-large;
+    letter-spacing: .15em;
+    line-height: 1.25em;
+}
+
 #play-area {
     font-size: x-large;
     text-transform: uppercase;
@@ -247,14 +210,14 @@ ul {
 
 #guess-box {
     background-color: #2a2a2a;
-    color: #dea;
+    color: #ff0;
     font: 150%/100% "Courier" monospace;
     text-align: center;
     text-transform: uppercase;
     width: 4em;
     height: 1em;
     padding: .25em;
-    border: solid 3px #3c3;
+    border: solid 3px #6f6;
     margin-top: 1em;
     margin-bottom: .5em;
 }
@@ -277,4 +240,23 @@ ul {
     margin: 1em;
 }
 
+.alphabet {
+    float: left;
+    font-size: xx-large;
+    padding: 0 .5em .75em .75em;
+    cursor: crosshair;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
+.alpha-instruct {
+    display: block;
+    font-size: smaller;
+    font-style: italic;
+    padding: 2em 0 0 0;
+    clear: left;
+}

@@ -4,6 +4,7 @@
 	<div id="play-area">
 		<span class="prompt">Enter guess here:</span><br>
 		<input id="guess-box" type="text" name="guessed_word" maxlength="5" required><br>
+		<input id="game-id" type="hidden" value="<?=$game_data['game_id']?>">
 		<div id="guess-error"></div>
 		<button id="guess-button">Submit guess!</button>
 	</div>
