@@ -32,6 +32,8 @@ class game_controller extends base_controller {
 
 	public function play($game_id = NULL) {
 
+echo $game_id;
+
 		$q = 'SELECT *
 				FROM games
 			   WHERE game_id = '.$game_id.'
