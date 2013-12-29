@@ -8,13 +8,11 @@ class game_controller extends base_controller {
 
 	public function newgame() {
 
-		$secret_word = 'BAGEL';
-
 		$new_game = Array(
 			'game_id' => '',
 			'user_id' => $this->user->user_id,
 			'date_started' => Time::now(),
-			'secret_word' => $secret_word,
+			'secret_word' => NULL,
 			'last_played' => Time::now(),
 			'status' => 'live',
 			'num_guesses' => 0
@@ -83,6 +81,88 @@ class game_controller extends base_controller {
 		}
 
 		echo json_encode($guesses);
+	}
+
+	public function add_guess_by_game_id() {
+		$new_guess = Array(
+			'game_id' => $_POST['game_id'],
+			'guess_no' => '',
+			'guess_date' => Time::now(),
+			'word' => $_POST['word'],
+			'num_correct' => $_POST['num_correct']
+		);
+
+		$success = DB::instance(DB_NAME)->insert_row('guesses', $new_guess);
+
+		if($success) {
+			echo 0;
+		}
+		else {
+			echo -1;
+		}
+	}
+
+	public function get_secret_word_by_game_id() {
+		$q = 'SELECT secret_word
+				FROM games
+			   WHERE game_id = '.$_POST['game_id'];
+
+		$secret_word = DB::instance(DB_NAME)->select_field($q);
+
+		if($secret_word) {
+			echo $secret_word;
+		}
+		else {
+			echo '';
+		};
+	}
+
+	public function set_secret_word_by_game_id() {
+		$wc = 'WHERE game_id = '.$_POST['game_id'];
+
+		$q = 'SELECT *
+				FROM games
+				'.$wc;
+		
+		$game_data = DB::instance(DB_NAME)->select_row($q);
+
+		if($game_data['secret_word'] != NULL) {
+			echo -1;
+		}
+
+		$game_data['secret_word'] = $_POST['secret_word'];
+
+		DB::instance(DB_NAME)->update('games', $game_data, $wc);
+
+		echo 0;
+	}
+
+	public function close_game() {
+		$wc = 'WHERE game_id = '.$_POST['game_id'];
+
+		$q = 'SELECT *
+				FROM games
+				'.$wc;
+
+		$game_data = DB::instance(DB_NAME)->select_row($q);
+
+		$q = 'SELECT guess_no
+				FROM guesses
+				'.$wc;
+
+		$num_guesses = count(DB::instance(DB_NAME)->select_rows($q));
+
+		$game_data['num_guesses'] = $num_guesses;
+		$game_data['status'] = 'closed';
+
+		$success = DB::instance(DB_NAME)->update('games', $game_data, $wc);
+
+		if($success) {
+			echo 0;
+		}
+		else {
+			echo -1;
+		}
 	}
 
 } # eoc

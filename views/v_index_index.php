@@ -9,10 +9,16 @@
 <?php if($user): ?>
 
     <h2>Hello, <?=$user->username?>!</h2>
-    <h3>Updates</h3>
+
+    From here, you can:
+
     <ul>
-        <li>No updates currently.</li>
+        <li><a href="/game/newgame">Start a new game.</a></li>
+        <li>Select an existing game to the left to continue playing where you left off.</li>
+        <li>View your personal game stats (or log out) via the navigation bar at the top.</li>
+        <li>View other users' game stats by clicking on the usernames to the right.</li>
     </ul>
+    <br>
 
 <?php else: ?>
     <p>

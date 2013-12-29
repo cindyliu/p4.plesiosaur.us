@@ -78,7 +78,7 @@
 
     <?php endif; ?>
 
-    <div id='overlay'></div>
+    <div id='overlay'><div id="won">OVERLAY</div></div>
 
     </div>
 

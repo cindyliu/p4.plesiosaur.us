@@ -190,6 +190,8 @@ ul {
     width: 100%;
     height: 100%;
     background-color: black;
+    color: #0f0;
+    opacity: .5;
 }
 
 .guess {
@@ -259,4 +261,10 @@ ul {
     font-style: italic;
     padding: 2em 0 0 0;
     clear: left;
+}
+
+#instructions {
+    font-size: smaller;
+    text-align: left;
+    padding: 0 2em;
 }
