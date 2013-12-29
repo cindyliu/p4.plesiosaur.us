@@ -76,9 +76,6 @@ class index_controller extends base_controller {
 					break;
 				default:
 			}
-			
-		# Now set the <title> tag
-			$this->template->title = APP_NAME;
 	
 		# CSS/JS includes
 			$client_files_head = Array(

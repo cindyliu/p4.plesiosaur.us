@@ -47,6 +47,9 @@ class base_controller {
 				}
 			}
 
+		# Just set the <title> tag to the app name universally
+			$this->template->title = APP_NAME;
+
 	}
 	
 
