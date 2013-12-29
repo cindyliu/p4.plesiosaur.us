@@ -83,6 +83,7 @@ console.log(secret_word);
 			$('#guess-button').click(function() {
 				var guess = $('#guess-box').val().toUpperCase();
 				var guess_array = guess.split('');
+				$('#guess-box').val('');
 
 				var check_unique = Array();
 				var all_letters_unique = true;
@@ -111,7 +112,6 @@ console.log(sw_array);
 						if(sw_array.indexOf(guess_array[i]) >= 0) {
 							num_correct++;
 						};
-console.log(sw_array.indexOf(guess_array[i]));
 					};
 
 					$.ajax({
@@ -124,10 +124,16 @@ console.log(sw_array.indexOf(guess_array[i]));
 							}
 							$('#left-sidebar').append('<div class="guess">' + guess + ': ' + num_correct + '</div>');
 							if(guess == secret_word) {
-								$('#overlay').html('<div id=\'won\'>CONGRATULATIONS! YOU FOUND THE SECRET WORD, ' + secret_word + '!!!</div>');
-								var center = ($('body').height() / 2) - 5;
-								$('#overlay').css('height', center + 'px');
-								$('#overlay').show();
+								$('#content').html('CONGRATULATIONS, YOU FOUND THE SECRET WORD: ' + secret_word + '!');
+								$('#content').css({
+									'color': 'yellow',
+									'font-size': 'xx-large',
+									'width': '500px',
+									'height': $(document).height(),
+									'margin': '2em auto',
+								});
+
+								$('#alphabet').unbind('click');
 
 								$.ajax({
 									type: 'POST',

@@ -51,8 +51,6 @@ class game_controller extends base_controller {
 
 			$this->template->guesses = $guesses;
 
-		}
-
 		# CSS/JS includes
 			$client_files_head = Array('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	    	$this->template->client_files_head = Utils::load_client_files($client_files_head);
@@ -60,15 +58,16 @@ class game_controller extends base_controller {
 
 	    	$client_files_body = Array('/js/jotto.js');
 	    	$this->template->client_files_body = Utils::load_client_files($client_files_body);
+	    }
 
 		echo $this->template;
 	}
 
 	public function get_guesses_by_game_id() {
 		$q = 'SELECT guess_no, word, num_correct
-			FROM guesses
-		   WHERE game_id = '.$_POST['game_id'].'
-		ORDER BY guess_no ASC';
+				FROM guesses
+			   WHERE game_id = '.$_POST['game_id'].'
+			ORDER BY guess_no ASC';
 
 		$results = DB::instance(DB_NAME)->select_rows($q);
 
@@ -145,6 +144,11 @@ class game_controller extends base_controller {
 				'.$wc;
 
 		$game_data = DB::instance(DB_NAME)->select_row($q);
+
+		if($game_data['status'] != 'live') {
+			echo -1;
+			return;
+		}
 
 		$q = 'SELECT guess_no
 				FROM guesses

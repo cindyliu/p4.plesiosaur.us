@@ -14,9 +14,10 @@ body {
     font: 125%/150% "Courier" monospace;
     color: #eec;
     margin: auto;
+    width: 1200px;
 }
 
-.content {
+#wrapper {
     display: block;
     position: relative;
     margin: auto;
@@ -182,18 +183,6 @@ ul {
     clear: left;
 }
 
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    color: #0f0;
-    opacity: .5;
-}
-
 .guess {
     font-size: xx-large;
     letter-spacing: .15em;
@@ -226,7 +215,7 @@ ul {
 
 #guess-error {
     font-size: smaller;
-    color: red;
+    color: #f11;
 }
 
 #guess-button {

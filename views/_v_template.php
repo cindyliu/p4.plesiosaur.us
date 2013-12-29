@@ -12,7 +12,7 @@
 </head>
 
 <body>	
-    <div class='content'>
+    <div id='wrapper'>
 
     <?php if(isset($user->username)): ?>
         <div id="left-sidebar">
@@ -46,7 +46,10 @@
                 </div>
             <?php endif; ?>
 
-            <?php if(isset($content)) echo $content; ?>
+            <div id="content">
+                <?php if(isset($content)) echo $content; ?>
+            </div>
+
         </div>
         <div id="right-sidebar">
             <h2>Users</h2>
@@ -77,8 +80,6 @@
         <?php if(isset($content)) echo $content; ?>
 
     <?php endif; ?>
-
-    <div id='overlay'><div id="won">OVERLAY</div></div>
 
     </div>
 

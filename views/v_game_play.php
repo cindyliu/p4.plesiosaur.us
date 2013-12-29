@@ -38,5 +38,4 @@
 	~<br><br>
 <?php else: ?>
 	<h2>Error: not an active game</h2>
-
 <?php endif; ?>

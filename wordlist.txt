@@ -1,5 +1,5 @@
 aback
-abaft
+about
 bagel
 brown
 chewy
@@ -45,7 +45,7 @@ vixen
 witch
 wrong
 xylem
-xyzzy
+gizmo
 yearn
 young
 zebra
