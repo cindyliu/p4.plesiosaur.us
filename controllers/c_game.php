@@ -4,6 +4,10 @@ class game_controller extends base_controller {
 	
 	public function __construct() {
 		parent::__construct();
+
+		if(!$this->user) {
+			Router::redirect('/index/index/login-needed');
+		}
 	}
 
 	public function newgame() {
