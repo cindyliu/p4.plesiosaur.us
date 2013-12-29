@@ -15,7 +15,7 @@
 	<div id="instructions">
 		<p>
 			The object of the game is to guess the computer's secret word.
-			The computer's word will be a valid English word with 5 unique letters.
+			The computer's word will be a valid English word with 5 unique letters that is not a plural noun or conjugated verb.
 		</p>
 		<p>
 			To play, enter a 5-letter word in the box above.
@@ -32,7 +32,7 @@
 		<p>
 			If you're stuck, a simple strategy is to alter your guesses one letter at a time and see how the numbers change.
 			For example, if your guess MATCH has 3 correct letters and your next guess LATCH has only 2 correct letters, then you know that the secret word contains an M and does not contain an L.
-			You can make note of which letters you have determined are or are not in the secret word by clicking on the letters in the alphabet to the right.
+			You can make note of which letters you have determined are or are not in the secret word by clicking on the letters to change their color.
 		</p>
 	</div>
 	~<br><br>

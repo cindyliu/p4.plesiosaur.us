@@ -235,20 +235,31 @@ ul {
     float: left;
     font-size: xx-large;
     padding: 0 .5em .75em .75em;
-    cursor: crosshair;
+}
+
+.alphabet, .guess {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor: crosshair;
 }
 
-.alpha-instruct {
+#alpha-instruct {
     display: block;
     font-size: smaller;
     font-style: italic;
     padding: 2em 0 0 0;
+}
+
+#reset-alphas {
+    color: #9f9;
+    font-size: large;
+    font-style: normal;
+    padding: 1em 1em 0 1em;
+    cursor: pointer;
     clear: left;
 }
 
