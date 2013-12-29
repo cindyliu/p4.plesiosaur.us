@@ -51,8 +51,10 @@
         <div id="right-sidebar">
             <h2>Users</h2>
             <?php if(isset($user_list)): ?>
+                #<br>
                 <?php foreach($user_list as $user_x): ?>
                     <a href="/user/profile/<?=$user_x?>"><?=$user_x?></a><br>
+                    #<br>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
@@ -76,11 +78,11 @@
 
     <?php endif; ?>
 
-    <?php if(isset($client_files_body)) echo $client_files_body; ?>
-
     <div id='overlay'></div>
 
     </div>
+
+    <?php if(isset($client_files_body)) echo $client_files_body; ?>
 
 </body>
 </html>

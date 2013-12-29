@@ -28,74 +28,18 @@ body {
     display: block;
     position: relative;
     float: left;
-    width: 25%;
+    width: 20%;
     padding: .5em;
     text-align: center;
 }
 
 #middle-column {
-    width: 40%;
+    width: 50%;
     padding: 0 1.5em;
     border-left: 1px dashed white;
     border-right: 1px dashed white;
 }
 
-
-/*
-a:link, a:visited {
-    text-decoration: none;
-    color: #8e9;
-}
-
-a:hover, a:active {
-    text-decoration: underline;
-}
-
-.button, nav a {
-    display: block;
-    background-color: #283;
-    text-align: center;
-    font-weight: bold;
-    padding: .5em 1em .5em 1em;
-    margin: auto;
-    border: solid 2px #555;
-    border-radius: 1em;
-}
-
-nav a:link, nav a:visited {
-    color: #cfc;
-    margin: 0 .5em 0 .5em;
-}
-
-nav a:hover, nav a:active {
-    background-color: #cfc;
-    color: #283;
-    text-decoration: none;
-}
-
-a#profile:link, a#profile:visited {
-    background-color: #ed8;
-    color: black;
-}
-
-a#profile:hover, a#profile:active {
-    background-color: black;
-    color: white;
-}
-
-a.button:link, a.button:visited {
-    background-color: #004;
-    color: #ccc;
-    font-size: 75%;
-    margin: auto;
-}
-
-a.button:hover, a.button:active {
-    background-color: #ccc;
-    color: #008;
-    text-decoration: none;
-}
-*/
 
 /* h1 tag is pretty much only used in header */
 h1 {
@@ -112,20 +56,13 @@ h1 {
     clear: none;
 }
 
-/* again changes based on user login status */
-h1.in {
-    position: relative;
-    float: right;
-    background-color: #ccf;
-    color: #008;
-    width: 25%;
-    padding: .75em 0 .75em 0;
-    margin: 0;
-    clear: none;
+h2 {
+    color: #3f6;
+    padding: 1em;
 }
 
-h2 {
-    padding: 1em;
+#middle-column h2 {
+    color: #dfa;
 }
 
 /*
@@ -202,22 +139,32 @@ input[type=button]:active, input[type=submit]:active {
 
 /************ NEW STUFF BELOW ***************/
 
-a:link {
-    color: #b9ffb9;
+a:link, a:visited {
+    color: #6e6;
     text-decoration: none;
 }
 
-a:visited {
-    color: #ff9;
-    text-decoration: none;
-}
-
-a:link:hover, a:active {
-    color: #9f9;
+a:hover, a:active {
+    color: #ff6;
     text-decoration: underline;
 }
 
-a:visited:hover {
+#middle-column a:link {
+    color: #9c9;
+    text-decoration: none;
+}
+
+#middle-column a:visited {
+    color: #bf9;
+    text-decoration: none;
+}
+
+#middle-column a:link:hover, #middle-column a:active {
+    color: #6f6;
+    text-decoration: underline;
+}
+
+#middle-column a:visited:hover {
     color: #ccc;
     text-decoration: none;
 }
@@ -242,16 +189,16 @@ input[type=text], input[type=password] {
 #navigation li {
     position: relative;
     float: left;
-    margin: 0 1em;
-    padding: 0 1em;
+    margin: 0 2em;
+    padding: 0 1.25em;
 }
 
-#navigation li a {
+#navigation li a:link, #navigation li a:visited {
     color: white;
     text-decoration: none;
 }
 
-#navigation li a:hover {
+#navigation li a:hover, #navigation li a:active {
     color: #dfd;
     border-top: 1px dashed #aaa;
     border-bottom: 1px dashed #aaa;
@@ -287,3 +234,47 @@ ul {
     height: 100%;
     background-color: black;
 }
+
+#play-area {
+    font-size: x-large;
+    text-transform: uppercase;
+    color: #6f6;
+}
+
+#play-area *:focus {
+    outline: none;
+}
+
+#guess-box {
+    background-color: #2a2a2a;
+    color: #dea;
+    font: 150%/100% "Courier" monospace;
+    text-align: center;
+    text-transform: uppercase;
+    width: 4em;
+    height: 1em;
+    padding: .25em;
+    border: solid 3px #3c3;
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+#guess-error {
+    font-size: smaller;
+    color: red;
+}
+
+#guess-button {
+    background-color: #693;
+    color: #253;
+    font: 75%/75% "Courier" monospace;
+    height: 2em;
+    width: 10em;
+    border-top: solid .25em #9c6;
+    border-left: solid .25em #9c6;
+    border-bottom: solid .25em #360;
+    border-right: solid .25em #360;
+    margin: 1em;
+}
+
+
