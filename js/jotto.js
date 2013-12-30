@@ -206,6 +206,7 @@ function do_guess(sw) {
 						'height': $(document).height(),
 						'margin': '2em auto',
 					});
+					$('#content').append('<p><a href="/game/newgame">PLAY AGAIN</a></p>');
 
 					// TURN OFF ALPHABET COLOR CHANGING
 					$(document).off('click', ALPHA_SELECTOR);
