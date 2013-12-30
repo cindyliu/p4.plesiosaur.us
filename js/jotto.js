@@ -11,6 +11,7 @@ var GAME_ID = parseInt($('#game-id').val());
 $.get('/wordlist.txt', function(data) {
 	wordlist = data.toUpperCase().split(/\n/);
 console.log(wordlist);
+console.log(wordlist.length);
 	$('#left-sidebar').html('<h2>Guesses</h2>');
 	$('#right-sidebar').html('<h2>Alphabet</h2>');
 	var right_sidebar_to_append = '<div id="alphabet">';
