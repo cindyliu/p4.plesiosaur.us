@@ -39,4 +39,12 @@ and I apologize for that; hopefully the layout is intuitive enough.
 Originally, I had planned to make it a more social website where users
 could initiate games with other users, but that turned out to be more
 difficult than I could handle in the time I had (which was much shorter
-than it could have been, and I’m really sorry this is so late).
+than it could have been, and I’m really sorry this is so late). But that
+explains why there are occasionally patches of code that aren't currently
+being used.
+
+Lastly, I tried my best to put together a representative word list of
+reasonably common but not mundane 5-letter words, but I've no idea how
+good of a job I did, really. On the other hand, I learned a bunch of
+useful Unix text file manipulation commands....
+
