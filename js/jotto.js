@@ -173,12 +173,18 @@ console.log(sw_array);
 				}
 
 				var left_sidebar_to_append = '<div class="guess">';
+				var colors = Array();
 				for(var j = 0; j < guess_array.length; j++) {
 					left_sidebar_to_append = left_sidebar_to_append + '<span class="' + guess_array[j] + '">' + guess_array[j] + '</span>';
+					colors.push($('#alphabet > .' + guess_array[j]).css('color'));
 				}
 				left_sidebar_to_append = left_sidebar_to_append + ': ' + num_correct + '</div>';
 
 				$('#left-sidebar').append(left_sidebar_to_append);
+
+				for(j = 0; j < colors.length; j++) {
+					$('.' + guess_array[j]).css('color', colors[j]);
+				};
 
 				for(var j = 0; j < guess_array.length; j++) {
 					$('.guess.' + guess_array[j]).css('color','blue');
