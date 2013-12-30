@@ -151,6 +151,7 @@ function do_guess(sw) {
 	$('#guess-box').val('');
 	$('#guess-error').html('');
 
+	// ERROR CHECKING ON GUESS INPUT
 	if((guess.length != 5) || (!/^[A-Z]+$/.test(guess)) || !unique_letters(guess)) {
 		$('#guess-error').html('Your guess must contain exactly 5 unique alphabetical characters.');
 	}
@@ -158,6 +159,7 @@ function do_guess(sw) {
 		$('#guess-error').html('That word is not in our list of valid words. Please try another.');
 	}
 	else {
+		// CALCULATE NUMBER OF LETTERS COMMON TO USER GUESS WORD AND SECRET WORD
 		var sw_array = sw.split('');
 		var num_correct = 0;
 
@@ -167,6 +169,7 @@ function do_guess(sw) {
 			};
 		};
 
+		// LOAD GUESS INTO DATABASE IF VALID
 		$.ajax({
 			type: 'POST',
 			url: '/game/add_guess_by_game_id',
@@ -176,6 +179,7 @@ function do_guess(sw) {
 					return;
 				}
 
+				// ADD GUESS TO LIST OF GUESSES IN LEFT SIDEBAR
 				var left_sidebar_to_append = '<div class="guess">';
 				var colors = Array();
 				for(var j = 0; j < guess_array.length; j++) {
@@ -186,15 +190,14 @@ function do_guess(sw) {
 
 				$('#left-sidebar').append(left_sidebar_to_append);
 
+				// NEW GUESSES NEED TO INHERIT LETTER COLORS CHANGED BY USER
 				for(j = 0; j < colors.length; j++) {
 					$('.' + guess_array[j]).css('color', colors[j]);
 				};
 
-				for(var j = 0; j < guess_array.length; j++) {
-					$('.guess.' + guess_array[j]).css('color','blue');
-				};
-
+				// HANDLES USER WIN
 				if(guess == sw) {
+					// DISPLAY CONFIRMATION MESSAGE
 					$('#content').html('CONGRATULATIONS, YOU FOUND THE SECRET WORD: ' + sw + '!');
 					$('#content').css({
 						'color': 'yellow',
@@ -204,8 +207,10 @@ function do_guess(sw) {
 						'margin': '2em auto',
 					});
 
+					// TURN OFF ALPHABET COLOR CHANGING
 					$(document).off('click', ALPHA_SELECTOR);
 
+					// CLOSE GAME
 					$.ajax({
 						type: 'POST',
 						url: '/game/close_game',

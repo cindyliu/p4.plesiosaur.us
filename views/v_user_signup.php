@@ -1,3 +1,4 @@
+<!-- BASIC SIGNUP PAGE, PRETTY SIMILAR TO P2'S -->
 <h2>signup</h2>
 
 <?php if(isset($errors)): ?>

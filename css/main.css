@@ -97,6 +97,7 @@ td.prompt {
 
 /************ NEW STUFF BELOW ***************/
 
+/* LINKS */
 a:link, a:visited {
     color: #6e6;
     text-decoration: none;
@@ -127,6 +128,7 @@ a:hover, a:active {
     text-decoration: none;
 }
 
+/* LOGIN FORMATTING */
 #login {
     color: #aec;
 }
@@ -139,6 +141,7 @@ input[type=text], input[type=password] {
     margin: .5em;
 }
 
+/* NAVBAR FORMATTING */
 #navigation {
     font-size: 90%;
     list-style-type: none;    
@@ -162,10 +165,12 @@ input[type=text], input[type=password] {
     border-bottom: 1px dashed #aaa;
 }
 
+/* BECAUSE CENTERED BULLETED LISTS LOOK TERRIBLE */
 ul {
     text-align: left;
 }
 
+/* OLD CODE FROM WHEN I WAS GOING TO DO PLAYER VS. PLAYER */
 .user-message {
     display: block;
     position: relative;
@@ -183,6 +188,7 @@ ul {
     clear: left;
 }
 
+/* LEFT SIDEBAR STYLING DURING GAMEPLAY */
 .guess > span {
     font-size: xx-large;
     letter-spacing: .15em;
@@ -199,6 +205,7 @@ ul {
     outline: none;
 }
 
+/* MIDDLE COLUMN STYLING DURING GAMEPLAY (USER GUESS) */
 #guess-box {
     background-color: #2a2a2a;
     color: #ff0;
@@ -231,6 +238,13 @@ ul {
     margin: 1em;
 }
 
+#instructions {
+    font-size: smaller;
+    text-align: left;
+    padding: 0 2em;
+}
+
+/* RIGHT SIDEBAR STYLING DURING GAMEPLAY */
 #alphabet > div {
     float: left;
     font-size: xx-large;
@@ -261,10 +275,4 @@ ul {
     padding: 1em 1em 0 1em;
     cursor: pointer;
     clear: left;
-}
-
-#instructions {
-    font-size: smaller;
-    text-align: left;
-    padding: 0 2em;
 }

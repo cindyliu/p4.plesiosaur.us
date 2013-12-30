@@ -1,6 +1,8 @@
+<!-- SETS UP BASE GAMEPLAY PAGE VIEW WHICH WILL BE CHANGED VIA JAVASCRIPT -->
 <?php if(isset($game_data)): ?>
 	<h2>Game #<?=$game_data['game_id']?></h2>
 
+	<!-- USER GUESS "FORM" -->
 	<div id="play-area">
 		<span class="prompt">Enter guess here:</span><br>
 		<input id="guess-box" type="text" name="guessed_word" maxlength="5" required><br>
@@ -11,6 +13,7 @@
 
 	<br>
 
+	<!-- INSTRUCTIONS FOR THE N00BS -->
 	<h3>How to play JOTTO:</h3>
 	<div id="instructions">
 		<p>
@@ -37,5 +40,6 @@
 	</div>
 	~<br><br>
 <?php else: ?>
+	<!-- IF INVALID GAME PARAMETER -->
 	<h2>Error: not an active game</h2>
 <?php endif; ?>
