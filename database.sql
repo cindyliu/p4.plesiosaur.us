@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 29, 2013 at 02:04 AM
+-- Generation Time: Dec 30, 2013 at 05:32 AM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -24,13 +24,13 @@ CREATE TABLE `games` (
   `game_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `date_started` int(11) NOT NULL,
-  `secret_word` varchar(5) NOT NULL COMMENT 'the computer''s word',
+  `secret_word` varchar(5) DEFAULT NULL COMMENT 'the computer''s word',
   `last_played` int(11) NOT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'live' COMMENT 'is game current or finished?',
   `num_guesses` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`game_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 
 -- --------------------------------------------------------
@@ -46,7 +46,7 @@ CREATE TABLE `guesses` (
   `word` varchar(5) NOT NULL,
   `num_correct` int(11) DEFAULT NULL,
   PRIMARY KEY (`guess_no`,`game_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
 
 
 --
@@ -79,4 +79,5 @@ CREATE TABLE `users` (
   `avatar` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
 

@@ -1,15 +1,20 @@
 <?php
-
+// ALL GAMEPLAY FUNCTIONS IN THIS CONTROLLER
 class game_controller extends base_controller {
 	
 	public function __construct() {
 		parent::__construct();
 
+		// IF NOT LOGGED IN, CAN'T DO GAMES
 		if(!$this->user) {
 			Router::redirect('/index/index/login-needed');
 		}
 	}
 
+	// START A NEW GAME:
+	// GENERATE NEW GAME DATA, LOAD INTO DATABASE, THEN
+	// REROUTE TO GAMEPLAY PAGE SO THE USER CAN START
+	// PLAYING THIS GAME IMMEDIATELY
 	public function newgame() {
 
 		$new_game = Array(
@@ -32,6 +37,7 @@ class game_controller extends base_controller {
 		}
 	}
 
+	// GAMEPLAY. PRETTY SIMPLE BASE PAGE; ALL GAME LOGIC VIA JAVASCRIPT
 	public function play($game_id = NULL) {
 
 		$q = 'SELECT *
@@ -67,6 +73,7 @@ class game_controller extends base_controller {
 		echo $this->template;
 	}
 
+	// FUNCTION TO HANDLE AJAX CALL TO GET LIST OF GUESSES IN THIS GAME
 	public function get_guesses_by_game_id() {
 		$q = 'SELECT guess_no, word, num_correct
 				FROM guesses
@@ -86,6 +93,7 @@ class game_controller extends base_controller {
 		echo json_encode($guesses);
 	}
 
+	// FUNCTION TO HANDLE AJAX CALL TO INSERT NEW VALID USER GUESSES INTO DATABASE
 	public function add_guess_by_game_id() {
 		$new_guess = Array(
 			'game_id' => $_POST['game_id'],
@@ -105,6 +113,7 @@ class game_controller extends base_controller {
 		}
 	}
 
+	// FUNCTION TO HANDLE AJAX CALL TO RETRIEVE GAME'S SECRET WORD, IF IT EXISTS
 	public function get_secret_word_by_game_id() {
 		$q = 'SELECT secret_word
 				FROM games
@@ -120,6 +129,8 @@ class game_controller extends base_controller {
 		};
 	}
 
+	// FUNCTION TO HANDLE AJAX CALL TO SET THE GAME'S SECRET WORD
+	// IF IT DOESN'T ALREADY HAVE ONE
 	public function set_secret_word_by_game_id() {
 		$wc = 'WHERE game_id = '.$_POST['game_id'];
 
@@ -140,6 +151,8 @@ class game_controller extends base_controller {
 		echo 0;
 	}
 
+	// FUNCTION TO HANDLE AJAX CALL TO LET THE DATABASE KNOW WHEN A GAME
+	// HAS BEEN COMPLETED
 	public function close_game() {
 		$wc = 'WHERE game_id = '.$_POST['game_id'];
 

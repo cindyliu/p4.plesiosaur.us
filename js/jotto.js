@@ -1,4 +1,4 @@
-// MAGIC
+// GLOBAL VARS
 var ALPHABET = Array(
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
 	'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
@@ -8,10 +8,12 @@ var ALPHA_SELECTOR = '.A, .B, .C, .D, .E, .F, .G, .H, .I, .J, .K, .L, .M, .N, .O
 
 var GAME_ID = parseInt($('#game-id').val());
 
+// LOAD WORDLIST INTO ARRAY. SINCE THIS MAY TAKE A LITTLE WHILE,
+// ALL OTHER GAME LOGIC IS IN ITS CALLBACK FUNCTION
 $.get('/wordlist.txt', function(data) {
 	wordlist = data.toUpperCase().split(/\n/);
-console.log(wordlist);
-console.log(wordlist.length);
+
+	// CHANGE LEFT AND RIGHT SIDEBARS TO GUESS LIST AND ALPHABET
 	$('#left-sidebar').html('<h2>Guesses</h2>');
 	$('#right-sidebar').html('<h2>Alphabet</h2>');
 	var right_sidebar_to_append = '<div id="alphabet">';
@@ -22,10 +24,9 @@ console.log(wordlist.length);
 	right_sidebar_to_append = right_sidebar_to_append + '</div><div id="reset-alphas">Reset Colors</div>';
 	right_sidebar_to_append = right_sidebar_to_append + '<div id="alpha-instruct">Click letters to mark them in black (not in secret word), then green (in secret word), then back to default.</div>';
 
-console.log(right_sidebar_to_append);
-
 	$('#right-sidebar').append(right_sidebar_to_append);
 
+	// GET GUESS LIST AND PUT IT INTO LEFT SIDEBAR
 	$.ajax({
 		type: 'POST',
 		url: '/game/get_guesses_by_game_id',
@@ -39,7 +40,7 @@ console.log(right_sidebar_to_append);
 					left_sidebar_to_append = left_sidebar_to_append + '<span class="' + guess_split[j] + '">' + guess_split[j] + '</span>';
 				}
 				left_sidebar_to_append = left_sidebar_to_append + ': ' + guesses[i]['num_correct'] + '</div>';
-console.log(left_sidebar_to_append);
+
 				$('#left-sidebar').append(left_sidebar_to_append);
 			};
 		},
@@ -48,6 +49,7 @@ console.log(left_sidebar_to_append);
 		}
 	});
 
+	// BUTTON ANIMATION
 	$('#guess-button').mousedown(function() {
 		$(this).css('border-top','solid .25em #360');
 		$(this).css('border-left','solid .25em #360');
@@ -62,6 +64,7 @@ console.log(left_sidebar_to_append);
 		$(this).css('border-right','solid .25em #360');
 	});
 
+	// ALPHABET LETTER COLOR CHANGING HANDLER
 	$(document).on('click', ALPHA_SELECTOR, function() {
 		var classes = $(this).attr('class');
 		var this_class = classes[(classes.length - 1)];
@@ -80,6 +83,7 @@ console.log(left_sidebar_to_append);
 		$(ALPHA_SELECTOR).css('color', 'rgb(238, 238, 204)');
 	});
 
+	// GET SECRET WORD, SET IF NECESSARY (IF NEWGAME)
 	$.ajax({
 		type: 'POST',
 		url: '/game/get_secret_word_by_game_id',
@@ -104,7 +108,7 @@ console.log(left_sidebar_to_append);
 					}
 				});
 			}
-console.log(secret_word);
+
 			$('#guess-button').click(function() {
 				do_guess(secret_word);
 			});
@@ -121,7 +125,7 @@ console.log(secret_word);
 
 });
 
-
+// FUNCTION TO CHECK WORD FOR UNIQUE LETTERS
 function unique_letters(word) {
 	var word_array = word.split('');
 
@@ -140,14 +144,13 @@ function unique_letters(word) {
 	return all_letters_unique;
 }
 
+// HANDLES USER GUESS INPUT
 function do_guess(sw) {
 	var guess = $('#guess-box').val().toUpperCase();
 	var guess_array = guess.split('');
 	$('#guess-box').val('');
 	$('#guess-error').html('');
 
-console.log(guess);
-console.log(guess_array);
 	if((guess.length != 5) || (!/^[A-Z]+$/.test(guess)) || !unique_letters(guess)) {
 		$('#guess-error').html('Your guess must contain exactly 5 unique alphabetical characters.');
 	}
@@ -157,7 +160,7 @@ console.log(guess_array);
 	else {
 		var sw_array = sw.split('');
 		var num_correct = 0;
-console.log(sw_array);
+
 		for(var i = 0; i < guess_array.length; i++) {
 			if(sw_array.indexOf(guess_array[i]) >= 0) {
 				num_correct++;

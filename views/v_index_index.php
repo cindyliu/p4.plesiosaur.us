@@ -1,11 +1,13 @@
 <!-- HOME PAGE -->
 
+<!-- VARIOUS ERROR/CONFIRMATION MESSAGES GO HERE -->
 <?php if(isset($message)): ?>
     <div class="user-message">
         <?=$message?>
     </div>
 <?php endif; ?>
 
+<!-- LOGGED-IN USER SEES A WELCOME MESSAGE AND LIST OF OPTIONS INCLUDING NEWGAME -->
 <?php if($user): ?>
 
     <h2>Hello, <?=$user->username?>!</h2>
@@ -20,6 +22,7 @@
     </ul>
     <br>
 
+<!-- NON-LOGGED IN USER ONLY SEES LOGIN FORM -->
 <?php else: ?>
     <p>
         Please log in below to start playing JOTTO!

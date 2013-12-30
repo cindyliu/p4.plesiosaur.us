@@ -52,7 +52,7 @@ class base_controller {
 
 	}
 	
-
+	// GETS LIST OF ALL GAMES LINKED TO THE GIVEN USER_ID
 	private function get_games($player_id = NULL) {
 		if($player_id == NULL) {
 			return (-2);
@@ -98,6 +98,7 @@ class base_controller {
 		}
 	}
 
+	// GETS LIST OF ALL USERS EXCEPT LOGGED-IN USER
 	private function get_users() {
 		if(!$this->user) {
 			return (-1);

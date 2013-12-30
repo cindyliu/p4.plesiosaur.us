@@ -14,6 +14,7 @@ class index_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
 	public function index($message = NULL) {
 
+	// HANDLE LOGIN FORM SINCE INDEX PAGE IS NOW ALSO LOGIN PAGE
 		if($_POST) {
 			$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -38,6 +39,7 @@ class index_controller extends base_controller {
 		# First, set the content of the template with a view file
 			$this->template->content = View::instance('v_index_index');
 
+		// ERROR/CONFIRMATION MESSAGE HANDLING
 			switch($message) {
 				case 'signed_up':
 					if($this->user) {

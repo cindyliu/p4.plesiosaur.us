@@ -14,6 +14,8 @@
 <body>	
     <div id='wrapper'>
 
+<!-- LOGGED-IN USER SEES LIST OF THEIR GAMES AND OTHER USERS, AND APPROPRIATE LINKS -->
+<!-- THE SIDEBARS WILL BE CHANGED VIA JAVASCRIPT LATER ON DURING GAMEPLAY -->
     <?php if(isset($user->username)): ?>
         <div id="left-sidebar">
             <h2>My Games</h2>
@@ -62,6 +64,7 @@
             <?php endif; ?>
         </div>
 
+<!-- NON-LOGGED IN USER SEES A LANDING PAGE FOR LOGGING IN -->
     <?php else: ?>
 
         <ul id="navigation">
@@ -83,6 +86,7 @@
 
     </div>
 
+<!-- JAVASCRIPT MAGIC -->
     <?php if(isset($client_files_body)) echo $client_files_body; ?>
 
 </body>

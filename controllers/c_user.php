@@ -1,11 +1,13 @@
 <?php
 
+// ALL USER FUNCTIONS IN THIS CONTROLLER
 class user_controller extends base_controller {
 	
 	public function __construct() {
 		parent::__construct();
 	} 
 
+	// SIGNUP PAGE VIEW AND PROCESSING
 	public function signup() {
 
         // Generate view, initialize errors
@@ -19,7 +21,7 @@ class user_controller extends base_controller {
 	    	return;
 		}
 
-		// Sanitization???
+		// Sanitization
 		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
 		// Checking for existing username
@@ -51,7 +53,7 @@ class user_controller extends base_controller {
 	    	array_push($errors, 'Password entries did not match.');
 		}
 
-		// Limit usernames to 16 characters
+		// Limit usernames and passwords to 16 characters
 		$check_len = strlen($_POST['username']);
 		if(($check_len > 16) || ($check_len < 2)) {
 			$error_flag = true;
@@ -91,10 +93,13 @@ class user_controller extends base_controller {
 		}
 	}
 
+	// USER PROFILE VIEW WITH STATS
 	public function profile($current_username = NULL) {
 
 		$current_username = DB::instance(DB_NAME)->sanitize($current_username);
 
+		// I USED TO HAVE SIGNUP FORM LEAD TO PROFILE PAGE; NOT ANYMORE
+		// BUT I LEFT THIS HERE ANYWAY
 		if($_POST) {
 			if((trim($_POST['username']) == '') || (trim($_POST['password']) == '')) {
     			Router::redirect('/index/index/failed');
@@ -128,6 +133,8 @@ class user_controller extends base_controller {
 				Router::redirect('/index/index/failed');
 			}
 		}
+		// DIFFERENT WELCOME MESSAGES BASED ON IF THIS IS YOUR PROFILE OR
+		// ANOTHER USER'S PROFILE; GETS USER GAME STATS
 		else {
 			if(!$this->user) {
 				Router::redirect('/index/index/login-needed');
@@ -202,6 +209,7 @@ class user_controller extends base_controller {
 		}
 	}
 
+	// BASIC LOGOUT FUNCTION
 	public function logout() {
 		if(!$this->user) {
 			Router::redirect('/index/index/login-needed');
