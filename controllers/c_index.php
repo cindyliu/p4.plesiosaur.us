@@ -79,12 +79,6 @@ class index_controller extends base_controller {
 				default:
 			}
 	
-		# CSS/JS includes
-			$client_files_head = Array(
-				"//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
-				"//cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js");
-	    	$this->template->client_files_head = Utils::load_client_files($client_files_head);
-
 		# Render the view
 			echo $this->template;
 

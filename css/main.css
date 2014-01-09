@@ -133,6 +133,10 @@ a:hover, a:active {
     color: #aec;
 }
 
+.archived {
+    color: #6af;
+}
+
 input[type=text], input[type=password] {
     background-color: #aca;
     color: #253;

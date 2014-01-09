@@ -8,11 +8,155 @@ var ALPHA_SELECTOR = '.A, .B, .C, .D, .E, .F, .G, .H, .I, .J, .K, .L, .M, .N, .O
 
 var GAME_ID = parseInt($('#game-id').val());
 
-// LOAD WORDLIST INTO ARRAY. SINCE THIS MAY TAKE A LITTLE WHILE,
-// ALL OTHER GAME LOGIC IS IN ITS CALLBACK FUNCTION
-$.get('/wordlist.txt', function(data) {
-	wordlist = data.toUpperCase().split(/\n/);
+// TEST FOR CLOSED GAME:
+// IF GAME IS CLOSED, DISPLAY ARCHIVE MESSAGE AND GUESS HISTORY BUT DO NOT LOAD GAME.
+// IF GAME IS LIVE, COMPLETE GAME SETUP.
+$.ajax({
+	type: 'POST',
+	url: '/game/get_game_data',
+	success: function(game_data_json) {
+		if(game_data_json == '') {
+			alert('Error: game data could not be retrieved.');
+			console.log('Error on game_id = ' + GAME_ID);
+		}
+		else {
+			var game_data = $.parseJSON(game_data_json);
+			if(game_data['status'] == 'closed') {
+				display_game_sidebars('closed');
 
+				$('#content').html('<h2>GAME #' + GAME_ID + ': ARCHIVED</h2>Solved ' + game_data['last_played'] + '<br>after ' + game_data['num_guesses'] + ' guesses');
+				$('#content').css({
+					'color': 'rgb(102, 170, 248)',
+					'width': '500px',
+					'height': $(document).height(),
+					'margin': '2em auto',
+				});
+				$('#content h2').css({
+					'color': 'rgb(102, 170, 255)',
+					'font-size': 'xx-large'
+				});
+			}
+			else {
+				do_game();
+			};
+		};
+	},
+	data: {
+		'game_id': GAME_ID
+	}
+});
+
+
+// PUT GAME INTO SEPARATE FUNCTION TO AVOID TOO MUCH NESTING
+function do_game() {
+	// LOAD WORDLIST INTO ARRAY. SINCE THIS MAY TAKE A LITTLE WHILE,
+	// ALL OTHER GAME LOGIC IS IN ITS CALLBACK FUNCTION
+	$.get('/wordlist.txt', function(data) {
+		wordlist = data.toUpperCase().split(/\n/);
+
+		display_game_sidebars('live');
+
+		// BUTTON ANIMATION
+		$('#guess-button').mousedown(function() {
+			$(this).css('border-top','solid .25em #360');
+			$(this).css('border-left','solid .25em #360');
+			$(this).css('border-bottom','solid .25em #9c6');
+			$(this).css('border-right','solid .25em #9c6');
+		});
+
+		$('#guess-button').mouseup(function() {
+			$(this).css('border-top','solid .25em #9c6');
+			$(this).css('border-left','solid .25em #9c6');
+			$(this).css('border-bottom','solid .25em #360');
+			$(this).css('border-right','solid .25em #360');
+		});
+
+		// ALPHABET LETTER COLOR CHANGING HANDLER
+		$(document).on('click', ALPHA_SELECTOR, function() {
+			var classes = $(this).attr('class');
+			var this_class = classes[(classes.length - 1)];
+			if($(this).css('color') == 'rgb(238, 238, 204)') {
+				$('.' + this_class).css('color', 'rgb(0, 0, 0)');
+			}
+			else if($(this).css('color') == 'rgb(0, 0, 0)') {
+				$('.' + this_class).css('color', 'rgb(0, 255, 0)');
+			}
+			else {
+				$('.' + this_class).css('color', 'rgb(238, 238, 204)');
+			}
+		});
+
+		$('#reset-alphas').click(function() {
+			$(ALPHA_SELECTOR).css('color', 'rgb(238, 238, 204)');
+		});
+
+		// GET SECRET WORD, SET IF NECESSARY (IF NEWGAME)
+		$.ajax({
+			type: 'POST',
+			url: '/game/get_secret_word_by_game_id',
+			success: function(secret_word) {
+				if(secret_word == '') {
+					do {
+						secret_word = wordlist[Math.floor(Math.random() * wordlist.length)];
+					} while (!unique_letters(secret_word));
+
+					$.ajax({
+						type: 'POST',
+						url: '/game/set_secret_word_by_game_id',
+						success: function(retval) {
+							if(retval != 0) {
+								alert('Error setting secret word!!!');
+								return;
+							}
+						},
+						data: {
+							'game_id': GAME_ID,
+							'secret_word': secret_word
+						}
+					});
+				}
+
+				$('#guess-button').click(function() {
+					do_guess(secret_word);
+				});
+				$('#guess-box').keypress(function(event) {
+					if(event.which == 13) {
+						do_guess(secret_word);
+					}
+				});
+			},
+			data: {
+				'game_id': GAME_ID
+			}
+		});
+
+	});
+}
+
+
+// FUNCTION TO CHECK WORD FOR UNIQUE LETTERS
+function unique_letters(word) {
+	var word_array = word.split('');
+
+	var check_unique = Array();
+	var all_letters_unique = true;
+	for(var i = 0; i < word_array.length; i++) {
+		if(check_unique.indexOf(word_array[i]) < 0) {
+			check_unique.push(word_array[i]);
+		}
+		else {
+			all_letters_unique = false;
+			break;
+		}
+	}
+
+	return all_letters_unique;
+}
+
+
+// REPLACES THE GAMES LIST AND USER LIST OF THE LEFT AND RIGHT SIDEBARS
+// WITH THE GUESS HISTORY AND ALPHABET FOR GAMEPLAY
+function display_game_sidebars(status) {
 	// CHANGE LEFT AND RIGHT SIDEBARS TO GUESS LIST AND ALPHABET
 	$('#left-sidebar').html('<h2>Guesses</h2>');
 	$('#right-sidebar').html('<h2>Alphabet</h2>');
@@ -21,8 +165,10 @@ $.get('/wordlist.txt', function(data) {
 		right_sidebar_to_append = right_sidebar_to_append + '<div class="' + ALPHABET[i] + '">' + ALPHABET[i] + '</div>';
 	};
 
-	right_sidebar_to_append = right_sidebar_to_append + '</div><div id="reset-alphas">Reset Colors</div>';
-	right_sidebar_to_append = right_sidebar_to_append + '<div id="alpha-instruct">Click letters to mark them in black (not in secret word), then green (in secret word), then back to default.</div>';
+	if(status == 'live') {
+		right_sidebar_to_append = right_sidebar_to_append + '</div><div id="reset-alphas">Reset Colors</div>';
+		right_sidebar_to_append = right_sidebar_to_append + '<div id="alpha-instruct">Click letters to mark them in black (not in secret word), then green (in secret word), then back to default.</div>';
+	};
 
 	$('#right-sidebar').append(right_sidebar_to_append);
 
@@ -43,106 +189,17 @@ $.get('/wordlist.txt', function(data) {
 
 				$('#left-sidebar').append(left_sidebar_to_append);
 			};
+
+			if(status == 'closed') {
+				$('#alphabet, .guess').css('cursor', 'default');
+			};
 		},
 		data: {
 			'game_id': GAME_ID
 		}
 	});
-
-	// BUTTON ANIMATION
-	$('#guess-button').mousedown(function() {
-		$(this).css('border-top','solid .25em #360');
-		$(this).css('border-left','solid .25em #360');
-		$(this).css('border-bottom','solid .25em #9c6');
-		$(this).css('border-right','solid .25em #9c6');
-	});
-
-	$('#guess-button').mouseup(function() {
-		$(this).css('border-top','solid .25em #9c6');
-		$(this).css('border-left','solid .25em #9c6');
-		$(this).css('border-bottom','solid .25em #360');
-		$(this).css('border-right','solid .25em #360');
-	});
-
-	// ALPHABET LETTER COLOR CHANGING HANDLER
-	$(document).on('click', ALPHA_SELECTOR, function() {
-		var classes = $(this).attr('class');
-		var this_class = classes[(classes.length - 1)];
-		if($(this).css('color') == 'rgb(238, 238, 204)') {
-			$('.' + this_class).css('color', 'rgb(0, 0, 0)');
-		}
-		else if($(this).css('color') == 'rgb(0, 0, 0)') {
-			$('.' + this_class).css('color', 'rgb(0, 255, 0)');
-		}
-		else {
-			$('.' + this_class).css('color', 'rgb(238, 238, 204)');
-		}
-	});
-
-	$('#reset-alphas').click(function() {
-		$(ALPHA_SELECTOR).css('color', 'rgb(238, 238, 204)');
-	});
-
-	// GET SECRET WORD, SET IF NECESSARY (IF NEWGAME)
-	$.ajax({
-		type: 'POST',
-		url: '/game/get_secret_word_by_game_id',
-		success: function(secret_word) {
-			if(secret_word == '') {
-				do {
-					secret_word = wordlist[Math.floor(Math.random() * wordlist.length)];
-				} while (!unique_letters(secret_word));
-
-				$.ajax({
-					type: 'POST',
-					url: '/game/set_secret_word_by_game_id',
-					success: function(retval) {
-						if(retval != 0) {
-							alert('Error setting secret word!!!');
-							return;
-						}
-					},
-					data: {
-						'game_id': GAME_ID,
-						'secret_word': secret_word
-					}
-				});
-			}
-
-			$('#guess-button').click(function() {
-				do_guess(secret_word);
-			});
-			$('#guess-box').keypress(function(event) {
-				if(event.which == 13) {
-					do_guess(secret_word);
-				}
-			});
-		},
-		data: {
-			'game_id': GAME_ID
-		}
-	});
-
-});
-
-// FUNCTION TO CHECK WORD FOR UNIQUE LETTERS
-function unique_letters(word) {
-	var word_array = word.split('');
-
-	var check_unique = Array();
-	var all_letters_unique = true;
-	for(var i = 0; i < word_array.length; i++) {
-		if(check_unique.indexOf(word_array[i]) < 0) {
-			check_unique.push(word_array[i]);
-		}
-		else {
-			all_letters_unique = false;
-			break;
-		}
-	}
-
-	return all_letters_unique;
 }
+
 
 // HANDLES USER GUESS INPUT
 function do_guess(sw) {
@@ -236,3 +293,4 @@ function do_guess(sw) {
 
 	};
 }
+

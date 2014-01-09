@@ -22,15 +22,24 @@
             <?php if(isset($games)): ?>
                 <?php foreach($games as $game): ?>
                     <a href="/game/play/<?=$game['game_id']?>">Game #<?=$game['game_id']?></a><br>
-                    <?php if($game['last_move'] == NULL): ?>
-                        Started <?=$game['last_move_date']?><br>
-                        No moves yet.
+                    <?php if($game['status'] == 'live'): ?>
+                        <?php if($game['last_move'] == NULL): ?>
+                            Started <?=$game['last_move_date']?><br>
+                            No moves yet.
+                        <?php else: ?>
+                            Last guess: <?=$game['last_move']?><br>
+                            at <?=$game['last_move_date']?>
+                        <?php endif; ?>
                     <?php else: ?>
-                        Last guess: <?=$game['last_move']?><br>
-                        at <?=$game['last_move_date']?>
+                        Secret word: <?=$game['last_move']?><br>
+                        <small><i>Solved <?=$game['last_move_date']?><br></i></small>
+                        <span class="archived">ARCHIVED</span>
                     <?php endif; ?>
                     <br><br>
                 <?php endforeach; ?>
+            <?php else: ?>
+                No games yet.<br>
+                <a href="/game/newgame">Start new game?</a><br>
             <?php endif; ?>
         </div>
         <div id="middle-column">

@@ -42,8 +42,7 @@ class game_controller extends base_controller {
 
 		$q = 'SELECT *
 				FROM games
-			   WHERE game_id = '.$game_id.'
-				 AND status = "live"';
+			   WHERE game_id = '.$game_id;
 
 		$game = DB::instance(DB_NAME)->select_row($q);
 
@@ -62,15 +61,30 @@ class game_controller extends base_controller {
 			$this->template->guesses = $guesses;
 
 		# CSS/JS includes
-			$client_files_head = Array('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
-	    	$this->template->client_files_head = Utils::load_client_files($client_files_head);
-
-
-	    	$client_files_body = Array('/js/jotto.js');
+	    	$client_files_body = Array('/js/jotto.js', '/js/equalize_column_heights.js');
 	    	$this->template->client_files_body = Utils::load_client_files($client_files_body);
 	    }
 
 		echo $this->template;
+	}
+
+
+	public function get_game_data() {
+
+		$q = 'SELECT *
+				FROM games
+			   WHERE game_id = '.$_POST['game_id'];
+
+		$game_data = DB::instance(DB_NAME)->select_row($q);
+		$game_data['last_played'] = Time::display($game_data['last_played'], 'F j, Y g:ia');
+
+		if($game_data) {
+			echo json_encode($game_data);
+		}
+		else {
+			echo '';
+		}
+
 	}
 
 	// FUNCTION TO HANDLE AJAX CALL TO GET LIST OF GUESSES IN THIS GAME

@@ -50,6 +50,16 @@ class base_controller {
 		# Just set the <title> tag to the app name universally
 			$this->template->title = APP_NAME;
 
+		# CSS/JS includes
+		$client_files_head = Array(
+			"//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+			"//cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js");
+    	$this->template->client_files_head = Utils::load_client_files($client_files_head);
+
+		# Making sure the columns are all the same height....sigh
+    	$client_files_body = Array("/js/equalize_column_heights.js");
+		$this->template->client_files_body = Utils::load_client_files($client_files_body);
+
 	}
 	
 	// GETS LIST OF ALL GAMES LINKED TO THE GIVEN USER_ID
@@ -64,37 +74,44 @@ class base_controller {
 			$q = 'SELECT *
 					FROM games
 				   WHERE user_id = '.$player_id.'
-					 AND status = "live"';
+				ORDER BY last_played DESC';
 
 			$results = DB::instance(DB_NAME)->select_rows($q);
 
-			$games = Array();
-			foreach($results as $result) {
-				$q = 'SELECT game_id, guess_date, word
-						FROM guesses
-					   WHERE game_id = '.$result['game_id'].'
-					ORDER BY guess_no DESC
-					   LIMIT 1';
+			if($results) {
+				$games = Array();
+				foreach($results as $result) {
+					$q = 'SELECT game_id, guess_date, word
+							FROM guesses
+						   WHERE game_id = '.$result['game_id'].'
+						ORDER BY guess_no DESC
+						   LIMIT 1';
 
-				$last_guess = DB::instance(DB_NAME)->select_row($q);
+					$last_guess = DB::instance(DB_NAME)->select_row($q);
 
-				if($last_guess) {
-					$game = Array(
-						'game_id' => $result['game_id'],
-						'last_move' => strtoupper($last_guess['word']),
-						'last_move_date' => Time::display($last_guess['guess_date'], 'm-j-y g:ia')
-					);
+					if($last_guess) {
+						$game = Array(
+							'game_id' => $result['game_id'],
+							'last_move' => strtoupper($last_guess['word']),
+							'last_move_date' => Time::display($last_guess['guess_date'], 'm-j-y g:ia'),
+							'status' => $result['status']
+	 					);
+					}
+					else {
+						$game = Array(
+							'game_id' => $result['game_id'],
+							'last_move' => NULL,
+							'last_move_date' => Time::display($result['date_started'], 'm-j-y g:ia'),
+							'status' => $result['status']
+						);
+					}
+					array_push($games, $game);
 				}
-				else {
-					$game = Array(
-						'game_id' => $result['game_id'],
-						'last_move' => NULL,
-						'last_move_date' => Time::display($result['date_started'], 'm-j-y g:ia')
-					);
-				}
-				array_push($games, $game);
+				return $games;
 			}
-			return $games;
+			else {
+				return NULL;
+			}
 		}
 	}
 
